@@ -1,9 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
+ import { ToastContainer, toast } from 'react-toastify';
 
 const App = () => {
   const [link, setLink] = useState("");
   const [newLink, setNewLink] = useState("");
+  const notify = () => toast("Copied!")
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -146,7 +148,12 @@ const App = () => {
                   <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
                 </svg>
 
-                <span>Copy</span>
+                <span onClick={notify}>Copy</span>
+                <ToastContainer
+                  autoClose={3000}
+                  progressClassName="clipwren-progress"
+                  toastClassName="clipwren-toast"
+                />
               </button>
 
             </div>
