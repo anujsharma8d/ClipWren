@@ -1,4 +1,6 @@
 const Link = require("../model/link")
+require("dotenv").config();
+const base_url = process.env.BASE_URL
 
 const saveLink = async (req,res)=>{
     try{
@@ -15,7 +17,9 @@ const saveLink = async (req,res)=>{
             shortCode:randomCode
         })
 
-        res.status(201).json(newLink)
+        res.status(201).json({
+            shortUrl:`${base_url}/${newLink.shortCode}`
+        })
     } catch(err){
         res.status(500).json({
             message:err.message
@@ -24,4 +28,18 @@ const saveLink = async (req,res)=>{
 
 }
 
-module.exports = {saveLink}
+const redirectLink = async(req,res)=>{
+    const {shortCode} = req.params
+
+    const orglink = await Link.findOne({shortCode})
+
+    if(!orglink){
+        res.status(404).json({
+            message:"Short URL not found"
+        })
+    }
+
+    res.redirect(orglink.link)
+}
+
+module.exports = {saveLink,redirectLink}

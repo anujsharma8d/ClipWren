@@ -4,6 +4,7 @@ const cors = require("cors")
 require("dotenv").config();
 const app = express()
 const LinkRoute = require("./routes/LinkRoute")
+const redirectRoute = require("./routes/redirectRoute")
 
 app.use(cors())
 app.use(express.json())
@@ -15,6 +16,7 @@ app.get("/",(req,res)=>{
 })
 
 app.use("/api/url",LinkRoute)
+app.use("/",redirectRoute)
 
 const PORT = process.env.PORT || 5000
 
